@@ -11,6 +11,8 @@ interface OptionCardProps {
   href?: string;
   art?: string;
   comingSoon?: boolean;
+  priceWas?: string;
+  priceNow?: string;
 }
 
 function OptionCard({
@@ -23,6 +25,8 @@ function OptionCard({
   href,
   art,
   comingSoon,
+  priceWas,
+  priceNow,
 }: OptionCardProps) {
   const Wrapper = comingSoon ? "div" : "a";
   const wrapperProps = comingSoon
@@ -51,15 +55,30 @@ function OptionCard({
       )}
 
       <div className="flex flex-1 flex-col p-6">
-        <div className="mb-4 flex items-center gap-2">
-          <span
-            className={`flex h-8 w-8 items-center justify-center rounded-full ${badgeColor}`}
-          >
-            {icon}
-          </span>
-          <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/50">
-            {badge}
-          </span>
+        <div className="mb-4 flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2">
+            <span
+              className={`flex h-8 w-8 items-center justify-center rounded-full ${badgeColor}`}
+            >
+              {icon}
+            </span>
+            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/50">
+              {badge}
+            </span>
+          </div>
+
+          {priceNow && (
+            <div className="flex items-baseline gap-1.5">
+              {priceWas && (
+                <span className="text-xs text-white/30 line-through">
+                  {priceWas}
+                </span>
+              )}
+              <span className="font-display text-lg font-black text-white">
+                {priceNow}
+              </span>
+            </div>
+          )}
         </div>
 
         <h3 className="font-display mb-2 text-lg font-black uppercase tracking-tight text-white sm:text-xl">
@@ -112,9 +131,11 @@ export function CtaOptions() {
         <OptionCard
           icon={<Package className="h-4 w-4 text-black" />}
           badgeColor="bg-white"
-          badge="$97 One-Time"
+          badge="Best Value"
+          priceWas="$463"
+          priceNow="$97"
           title="Own the Entire Discography"
-          description="Every Braille Records release, every artist, all 109 and counting — yours forever in one purchase."
+          description="Every Braille Records release — all 109 and counting — sent as a Dropbox link in 320kbps MP3 and lossless FLAC. Buy anytime this year and every new release drops straight into your folder too."
           cta="Buy the Full Catalog"
           comingSoon
         />
