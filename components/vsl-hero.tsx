@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, Zap } from "lucide-react";
+import { ChevronDown, Zap, X, ArrowUp } from "lucide-react";
 
 const YOUTUBE_ID = "ssMQgTUAc2M";
 
@@ -12,6 +12,7 @@ interface VslHeroProps {
 
 export function VslHero({ releaseCount }: VslHeroProps) {
   const [docked, setDocked] = useState(false);
+  const [closed, setClosed] = useState(false);
   const sentinelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -19,13 +20,21 @@ export function VslHero({ releaseCount }: VslHeroProps) {
     if (!el) return;
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setDocked(!entry.isIntersecting);
+        const nowDocked = !entry.isIntersecting;
+        setDocked(nowDocked);
+        // Reset the "closed" dismissal once the hero video is back in view,
+        // so closing the mini-player doesn't permanently hide it forever.
+        if (!nowDocked) setClosed(false);
       },
       { threshold: 0 },
     );
     observer.observe(el);
     return () => observer.disconnect();
   }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <>
@@ -47,6 +56,8 @@ export function VslHero({ releaseCount }: VslHeroProps) {
           Bandcamp.
         </p>
 
+        {/* Sentinel marks the point where the video is considered "in view".
+            When it scrolls out, the player docks to the corner. */}
         <div ref={sentinelRef} className="relative z-10 mt-10 w-full max-w-4xl">
           <div
             className={`scanline relative overflow-hidden rounded-2xl border border-white/15 bg-black shadow-[0_0_120px_-20px_rgba(255,255,255,0.15)] transition-opacity duration-300 ${
@@ -77,19 +88,36 @@ export function VslHero({ releaseCount }: VslHeroProps) {
         </motion.div>
       </section>
 
+      {/* Docked mini player — appears once the hero video scrolls out of view */}
       <AnimatePresence>
-        {docked && (
+        {docked && !closed && (
           <motion.div
             initial={{ opacity: 0, scale: 0.6, y: 40 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.6, y: 40 }}
             transition={{ type: "spring", stiffness: 160, damping: 20 }}
-            className="fixed bottom-5 right-5 z-50 w-[220px] overflow-hidden rounded-xl border border-white/20 bg-black shadow-2xl sm:w-[280px]"
+            className="fixed bottom-5 right-5 z-50 w-[180px] overflow-hidden rounded-xl border border-white/20 bg-black shadow-2xl sm:w-[280px]"
           >
             <div className="flex items-center justify-between bg-white px-2 py-1">
-              <span className="font-display text-[10px] font-bold uppercase tracking-widest text-black">
+              <span className="font-display truncate text-[10px] font-bold uppercase tracking-widest text-black">
                 Braille Records
               </span>
+              <div className="flex shrink-0 items-center gap-1">
+                <button
+                  onClick={scrollToTop}
+                  aria-label="Back to top / reattach video"
+                  className="rounded-full p-1 text-black/60 transition-colors hover:bg-black/10 hover:text-black"
+                >
+                  <ArrowUp className="h-3 w-3" />
+                </button>
+                <button
+                  onClick={() => setClosed(true)}
+                  aria-label="Close video"
+                  className="rounded-full p-1 text-black/60 transition-colors hover:bg-black/10 hover:text-black"
+                >
+                  <X className="h-3 w-3" />
+                </button>
+              </div>
             </div>
             <div className="aspect-video w-full">
               <iframe
@@ -101,6 +129,22 @@ export function VslHero({ releaseCount }: VslHeroProps) {
               />
             </div>
           </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Small re-open tab once the docked player has been dismissed */}
+      <AnimatePresence>
+        {docked && closed && (
+          <motion.button
+            initial={{ opacity: 0, x: 40 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 40 }}
+            onClick={() => setClosed(false)}
+            className="fixed bottom-5 right-5 z-50 flex items-center gap-1.5 rounded-full border border-white/20 bg-black px-3 py-2 text-[10px] font-semibold uppercase tracking-wide text-white shadow-2xl"
+          >
+            <Zap className="h-3 w-3" />
+            Watch
+          </motion.button>
         )}
       </AnimatePresence>
     </>

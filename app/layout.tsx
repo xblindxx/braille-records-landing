@@ -1,10 +1,24 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { releases } from "@/lib/releases";
+
+const releaseCount = releases.length;
+const title = "Braille Records — You Have Just Found The Electronic Underground";
+const description = `${releaseCount} releases. One label. Trance, dubstep, trap, house, drum & bass and more — straight from the Braille Records catalog on Bandcamp.`;
 
 export const metadata: Metadata = {
-  title: "Braille Records — You Have Just Found The Electronic Underground",
-  description:
-    "94 releases. One label. Trance, dubstep, trap, house, drum & bass and more — straight from the Braille Records catalog on Bandcamp.",
+  title,
+  description,
+  openGraph: {
+    title,
+    description,
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
+  },
 };
 
 export default function RootLayout({
