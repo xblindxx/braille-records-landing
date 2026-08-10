@@ -5,19 +5,31 @@ import { releases } from "@/lib/releases";
 const releaseCount = releases.length;
 const title = "Braille Records — You Have Just Found The Electronic Underground";
 const description = `${releaseCount} releases. One label. Trance, dubstep, trap, house, drum & bass and more — straight from the Braille Records catalog on Bandcamp.`;
+const ogImageUrl =
+  "https://galaxy-prod.tlcdn.com/view/user_30lkrHgNDuDcw8jcID4t5begfcs/03751e9040fa42778bcfcf6dab25c3ef.jpg";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://landing.braillerecords.com"),
   title,
   description,
   openGraph: {
     title,
     description,
     type: "website",
+    images: [
+      {
+        url: ogImageUrl,
+        width: 1200,
+        height: 1200,
+        alt: "Braille Recordings",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title,
     description,
+    images: [ogImageUrl],
   },
 };
 
