@@ -5,6 +5,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, Zap, X, ArrowUp } from "lucide-react";
 
 const YOUTUBE_ID = "ssMQgTUAc2M";
+// No autoplay/mute: the video waits for a tap to play. Since playback is
+// then a genuine user gesture, mobile browsers allow it to start WITH sound
+// by default — which sidesteps a real bug where YouTube's embed chrome
+// hides the unmute control entirely on narrow mobile widths (like the
+// docked mini player), leaving muted autoplay video with no way to unmute.
+const YOUTUBE_SRC = `https://www.youtube-nocookie.com/embed/${YOUTUBE_ID}?controls=1&rel=0&modestbranding=1`;
 
 interface VslHeroProps {
   releaseCount: number;
@@ -51,9 +57,8 @@ export function VslHero({ releaseCount }: VslHeroProps) {
         </h1>
 
         <p className="relative z-10 mt-6 max-w-xl text-center text-sm text-white/50 sm:text-base">
-          Watch this, then scroll down &mdash; the full Braille Records
-          catalog is waiting below, sorted by genre and linked straight to
-          Bandcamp.
+          Tap play, then scroll down &mdash; the full Braille Records catalog
+          is waiting below, sorted by genre and linked straight to Bandcamp.
         </p>
 
         {/* Sentinel marks the point where the video is considered "in view".
@@ -67,7 +72,7 @@ export function VslHero({ releaseCount }: VslHeroProps) {
             <div className="aspect-video w-full">
               <iframe
                 className="h-full w-full"
-                src={`https://www.youtube-nocookie.com/embed/${YOUTUBE_ID}?autoplay=1&mute=1&controls=1&rel=0&modestbranding=1`}
+                src={YOUTUBE_SRC}
                 title="Braille Records VSL"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
@@ -96,33 +101,33 @@ export function VslHero({ releaseCount }: VslHeroProps) {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.6, y: 40 }}
             transition={{ type: "spring", stiffness: 160, damping: 20 }}
-            className="fixed bottom-5 right-5 z-50 w-[180px] overflow-hidden rounded-xl border border-white/20 bg-black shadow-2xl sm:w-[280px]"
+            className="fixed bottom-5 right-5 z-50 w-[220px] overflow-hidden rounded-xl border border-white/20 bg-black shadow-2xl sm:w-[280px]"
           >
-            <div className="flex items-center justify-between bg-white px-2 py-1">
+            <div className="flex items-center justify-between bg-white px-2 py-1.5">
               <span className="font-display truncate text-[10px] font-bold uppercase tracking-widest text-black">
                 Braille Records
               </span>
-              <div className="flex shrink-0 items-center gap-1">
+              <div className="flex shrink-0 items-center gap-0.5">
                 <button
                   onClick={scrollToTop}
                   aria-label="Back to top / reattach video"
-                  className="rounded-full p-1 text-black/60 transition-colors hover:bg-black/10 hover:text-black"
+                  className="flex h-8 w-8 items-center justify-center rounded-full text-black/60 transition-colors hover:bg-black/10 hover:text-black active:bg-black/20"
                 >
-                  <ArrowUp className="h-3 w-3" />
+                  <ArrowUp className="h-4 w-4" />
                 </button>
                 <button
                   onClick={() => setClosed(true)}
                   aria-label="Close video"
-                  className="rounded-full p-1 text-black/60 transition-colors hover:bg-black/10 hover:text-black"
+                  className="flex h-8 w-8 items-center justify-center rounded-full text-black/60 transition-colors hover:bg-black/10 hover:text-black active:bg-black/20"
                 >
-                  <X className="h-3 w-3" />
+                  <X className="h-4 w-4" />
                 </button>
               </div>
             </div>
             <div className="aspect-video w-full">
               <iframe
                 className="h-full w-full"
-                src={`https://www.youtube-nocookie.com/embed/${YOUTUBE_ID}?autoplay=1&mute=1&controls=1&rel=0&modestbranding=1`}
+                src={YOUTUBE_SRC}
                 title="Braille Records VSL (docked)"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
