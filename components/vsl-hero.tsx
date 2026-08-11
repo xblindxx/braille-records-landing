@@ -10,7 +10,9 @@ const YOUTUBE_ID = "ssMQgTUAc2M";
 // by default — which sidesteps a real bug where YouTube's embed chrome
 // hides the unmute control entirely on narrow mobile widths (like the
 // docked mini player), leaving muted autoplay video with no way to unmute.
-const YOUTUBE_SRC = `https://www.youtube-nocookie.com/embed/${YOUTUBE_ID}?controls=1&rel=0&modestbranding=1`;
+// enablejsapi=1 lets us send it play/pause postMessage commands so closing
+// the docked mini player can actually pause playback instead of just hiding it.
+const YOUTUBE_SRC = `https://www.youtube-nocookie.com/embed/${YOUTUBE_ID}?controls=1&rel=0&modestbranding=1&enablejsapi=1`;
 
 interface VslHeroProps {
   releaseCount: number;
@@ -20,6 +22,7 @@ export function VslHero({ releaseCount }: VslHeroProps) {
   const [docked, setDocked] = useState(false);
   const [closed, setClosed] = useState(false);
   const sentinelRef = useRef<HTMLDivElement>(null);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
 
   useEffect(() => {
     const el = sentinelRef.current;
@@ -38,8 +41,22 @@ export function VslHero({ releaseCount }: VslHeroProps) {
     return () => observer.disconnect();
   }, []);
 
+  const postCommand = (func: string) => {
+    iframeRef.current?.contentWindow?.postMessage(
+      JSON.stringify({ event: "command", func, args: [] }),
+      "*",
+    );
+  };
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleClose = () => {
+    // Pause the (single, shared) player when the mini window is dismissed so
+    // it doesn't keep playing silently off-screen.
+    postCommand("pauseVideo");
+    setClosed(true);
   };
 
   return (
@@ -49,7 +66,7 @@ export function VslHero({ releaseCount }: VslHeroProps) {
 
         <div className="relative z-10 mb-8 flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-[11px] uppercase tracking-[0.25em] text-white/80">
           <Zap className="h-3 w-3" />
-          Braille Records &mdash; {releaseCount} releases and counting
+          Braille Records — {releaseCount} releases and counting
         </div>
 
         <h1 className="font-display text-balance relative z-10 max-w-4xl text-center text-4xl font-black uppercase leading-[1.05] tracking-tight text-white sm:text-6xl md:text-7xl">
@@ -57,20 +74,60 @@ export function VslHero({ releaseCount }: VslHeroProps) {
         </h1>
 
         <p className="relative z-10 mt-6 max-w-xl text-center text-sm text-white/50 sm:text-base">
-          Tap play, then scroll down &mdash; the full Braille Records catalog
+          Tap play, then scroll down — the full Braille Records catalog
           is waiting below, sorted by genre and linked straight to Bandcamp.
         </p>
 
         {/* Sentinel marks the point where the video is considered "in view".
-            When it scrolls out, the player docks to the corner. */}
-        <div ref={sentinelRef} className="relative z-10 mt-10 w-full max-w-4xl">
-          <div
-            className={`scanline relative overflow-hidden rounded-2xl border border-white/15 bg-black shadow-[0_0_120px_-20px_rgba(255,255,255,0.15)] transition-opacity duration-300 ${
-              docked ? "opacity-0" : "opacity-100"
-            }`}
+            When it scrolls out, the player docks to the corner. It also
+            reserves the video's footprint in the hero layout — once the
+            player becomes position:fixed (docked), this box naturally
+            collapses to zero height since the player is no longer in flow. */}
+        <div
+          ref={sentinelRef}
+          className="relative z-10 mt-10 w-full max-w-4xl"
+        >
+          {/* Single persistent player. Only its position/size classes change
+              between the hero slot and the docked corner — the iframe itself
+              is never unmounted, so playback state (playing/paused/muted)
+              carries over exactly and a second video never gets created. */}
+          <motion.div
+            layout
+            transition={{ type: "spring", stiffness: 170, damping: 24 }}
+            className={
+              docked
+                ? `fixed bottom-5 right-5 z-50 w-[220px] overflow-hidden rounded-xl border border-white/20 bg-black shadow-2xl sm:w-[280px] lg:w-[360px] xl:w-[420px] ${
+                    closed ? "pointer-events-none opacity-0" : "opacity-100"
+                  }`
+                : "scanline relative w-full overflow-hidden rounded-2xl border border-white/15 bg-black shadow-[0_0_120px_-20px_rgba(255,255,255,0.15)] opacity-100"
+            }
           >
+            {docked && (
+              <div className="flex items-center justify-between bg-white px-2 py-1.5 lg:px-3 lg:py-2">
+                <span className="font-display truncate text-[10px] font-bold uppercase tracking-widest text-black lg:text-xs">
+                  Braille Records
+                </span>
+                <div className="flex shrink-0 items-center gap-0.5 lg:gap-1">
+                  <button
+                    onClick={scrollToTop}
+                    aria-label="Back to top / reattach video"
+                    className="flex h-8 w-8 items-center justify-center rounded-full text-black/60 transition-colors hover:bg-black/10 hover:text-black active:bg-black/20 lg:h-9 lg:w-9"
+                  >
+                    <ArrowUp className="h-4 w-4 lg:h-5 lg:w-5" />
+                  </button>
+                  <button
+                    onClick={handleClose}
+                    aria-label="Close video"
+                    className="flex h-8 w-8 items-center justify-center rounded-full text-black/60 transition-colors hover:bg-black/10 hover:text-black active:bg-black/20 lg:h-9 lg:w-9"
+                  >
+                    <X className="h-4 w-4 lg:h-5 lg:w-5" />
+                  </button>
+                </div>
+              </div>
+            )}
             <div className="aspect-video w-full">
               <iframe
+                ref={iframeRef}
                 className="h-full w-full"
                 src={YOUTUBE_SRC}
                 title="Braille Records VSL"
@@ -78,7 +135,7 @@ export function VslHero({ releaseCount }: VslHeroProps) {
                 allowFullScreen
               />
             </div>
-          </div>
+          </motion.div>
         </div>
 
         <motion.div
@@ -92,50 +149,6 @@ export function VslHero({ releaseCount }: VslHeroProps) {
           <ChevronDown className="h-4 w-4" />
         </motion.div>
       </section>
-
-      {/* Docked mini player — appears once the hero video scrolls out of view */}
-      <AnimatePresence>
-        {docked && !closed && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.6, y: 40 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.6, y: 40 }}
-            transition={{ type: "spring", stiffness: 160, damping: 20 }}
-            className="fixed bottom-5 right-5 z-50 w-[220px] overflow-hidden rounded-xl border border-white/20 bg-black shadow-2xl sm:w-[280px] lg:w-[360px] xl:w-[420px]"
-          >
-            <div className="flex items-center justify-between bg-white px-2 py-1.5 lg:px-3 lg:py-2">
-              <span className="font-display truncate text-[10px] font-bold uppercase tracking-widest text-black lg:text-xs">
-                Braille Records
-              </span>
-              <div className="flex shrink-0 items-center gap-0.5 lg:gap-1">
-                <button
-                  onClick={scrollToTop}
-                  aria-label="Back to top / reattach video"
-                  className="flex h-8 w-8 items-center justify-center rounded-full text-black/60 transition-colors hover:bg-black/10 hover:text-black active:bg-black/20 lg:h-9 lg:w-9"
-                >
-                  <ArrowUp className="h-4 w-4 lg:h-5 lg:w-5" />
-                </button>
-                <button
-                  onClick={() => setClosed(true)}
-                  aria-label="Close video"
-                  className="flex h-8 w-8 items-center justify-center rounded-full text-black/60 transition-colors hover:bg-black/10 hover:text-black active:bg-black/20 lg:h-9 lg:w-9"
-                >
-                  <X className="h-4 w-4 lg:h-5 lg:w-5" />
-                </button>
-              </div>
-            </div>
-            <div className="aspect-video w-full">
-              <iframe
-                className="h-full w-full"
-                src={YOUTUBE_SRC}
-                title="Braille Records VSL (docked)"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       {/* Small re-open tab once the docked player has been dismissed */}
       <AnimatePresence>
