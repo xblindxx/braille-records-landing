@@ -126,6 +126,7 @@ export function CtaOptions() {
           description="Get every new release the moment it drops, plus unlimited access to the entire back catalog. $50/year."
           cta="Subscribe on Bandcamp"
           href="https://braillerecords.com/subscribe"
+          art="https://galaxy-prod.tlcdn.com/view/user_30lkrHgNDuDcw8jcID4t5begfcs/d2a781b37c1f4bb3a01a06903ae6ce05.jpg"
         />
 
         <OptionCard
@@ -138,6 +139,7 @@ export function CtaOptions() {
           description="Every Braille Records release — all 109 and counting — sent as a Dropbox link in 320kbps MP3 and lossless FLAC. Buy anytime this year and every new release drops straight into your folder too."
           cta="Buy the Full Catalog"
           comingSoon
+          art="https://galaxy-prod.tlcdn.com/view/user_30lkrHgNDuDcw8jcID4t5begfcs/7fc01051f6e748d7af988ed2ae46fbd9.jpg"
         />
       </div>
     </section>
