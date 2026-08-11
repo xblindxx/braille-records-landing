@@ -62,17 +62,39 @@ export function CatalogGrid() {
           {releases.length} releases. Every genre.
         </h2>
         <p className="mt-2 text-xs text-white/50 sm:mt-4 sm:text-base">
-          Every cover links straight to Bandcamp &mdash; stream, download, or
+          Every cover links straight to Bandcamp — stream, download, or
           buy direct from the artists.
         </p>
       </div>
 
-      {/* Filter bar: a single horizontally-scrollable row on mobile (keeps it
-          compact so the colorful cover art stays the focus while scrolling),
-          wrapping into a centered block on larger screens. */}
-      <div className="no-scrollbar sticky top-0 z-20 -mx-4 mb-4 flex items-center gap-2 overflow-x-auto border-y border-white/10 bg-[#07070a]/90 px-4 py-2 backdrop-blur sm:mx-0 sm:mb-10 sm:flex-col sm:overflow-visible sm:rounded-2xl sm:border sm:px-4 sm:py-4">
-        <div className="flex shrink-0 items-center gap-2 sm:w-full sm:flex-wrap sm:justify-center">
-          {genreList.map((g) => (
+      <div className="no-scrollbar sticky top-0 z-20 -mx-4 mb-4 flex shrink-0 items-center gap-2 overflow-x-auto border-y border-white/10 bg-[#07070a]/90 px-4 py-2 backdrop-blur sm:mx-0 sm:mb-10 sm:flex-wrap sm:justify-center sm:overflow-visible sm:rounded-2xl sm:border sm:px-4 sm:py-4">
+        <button
+          onClick={() => setActive("All")}
+          className={`shrink-0 rounded-full px-3.5 py-1.5 text-[11px] font-medium uppercase tracking-wide transition-colors sm:px-4 sm:text-xs ${
+            active === "All"
+              ? "bg-white text-black"
+              : "bg-white/5 text-white/60 hover:bg-white/10 hover:text-white"
+          }`}
+        >
+          All
+        </button>
+
+        <button
+          onClick={() => setPwywOnly((v) => !v)}
+          className={`flex shrink-0 items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-wide transition-colors sm:px-4 sm:text-xs ${
+            pwywOnly
+              ? "border-[#9b5cff] bg-[#9b5cff] text-white"
+              : "border-[#9b5cff]/50 bg-[#9b5cff]/10 text-[#c9a9ff] hover:bg-[#9b5cff]/20"
+          }`}
+        >
+          <Gift className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
+          Pay What You Want
+          <span className="opacity-70">{pwywCount}</span>
+        </button>
+
+        {genreList
+          .filter((g) => g !== "All")
+          .map((g) => (
             <button
               key={g}
               onClick={() => setActive(g)}
@@ -83,40 +105,11 @@ export function CatalogGrid() {
               }`}
             >
               {g}
-              {g !== "All" && (
-                <span className="ml-1.5 opacity-60">
-                  {countByGenre.get(g) ?? 0}
-                </span>
-              )}
+              <span className="ml-1.5 opacity-60">
+                {countByGenre.get(g) ?? 0}
+              </span>
             </button>
           ))}
-
-          <button
-            onClick={() => setPwywOnly((v) => !v)}
-            className={`flex shrink-0 items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-wide transition-colors sm:hidden ${
-              pwywOnly
-                ? "border-[#9b5cff] bg-[#9b5cff] text-white"
-                : "border-[#9b5cff]/50 bg-[#9b5cff]/10 text-[#c9a9ff]"
-            }`}
-          >
-            <Gift className="h-3 w-3" />
-            PWYW
-            <span className="opacity-70">{pwywCount}</span>
-          </button>
-        </div>
-
-        <button
-          onClick={() => setPwywOnly((v) => !v)}
-          className={`hidden shrink-0 items-center gap-1.5 rounded-full border px-4 py-1.5 text-xs font-semibold uppercase tracking-wide transition-colors sm:flex ${
-            pwywOnly
-              ? "border-[#9b5cff] bg-[#9b5cff] text-white"
-              : "border-[#9b5cff]/50 bg-[#9b5cff]/10 text-[#c9a9ff] hover:bg-[#9b5cff]/20"
-          }`}
-        >
-          <Gift className="h-3.5 w-3.5" />
-          Pay What You Want
-          <span className="opacity-70">{pwywCount}</span>
-        </button>
       </div>
 
       <p className="mb-3 text-center text-[10px] uppercase tracking-widest text-white/30 sm:mb-4 sm:text-xs">
@@ -169,7 +162,6 @@ function ReleaseCard({ release }: { release: Release }) {
           </span>
         )}
 
-        {/* Desktop-only hover overlay — art stays fully visible by default. */}
         <div className="absolute inset-0 hidden flex-col justify-end bg-gradient-to-t from-black/95 via-black/20 to-transparent p-3 opacity-0 transition-opacity duration-300 sm:flex sm:group-hover:opacity-100">
           <p className="mb-0.5 text-[10px] uppercase tracking-widest text-white/70">
             {release.genres.join(", ")}
@@ -184,7 +176,6 @@ function ReleaseCard({ release }: { release: Release }) {
         </div>
       </div>
 
-      {/* Mobile caption sits below the art so the cover itself stays uncovered. */}
       <div className="mt-1.5 sm:hidden">
         <p className="truncate text-[11px] font-semibold leading-tight text-white">
           {release.title}
