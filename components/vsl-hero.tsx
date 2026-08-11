@@ -101,26 +101,26 @@ export function VslHero({ releaseCount }: VslHeroProps) {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.6, y: 40 }}
             transition={{ type: "spring", stiffness: 160, damping: 20 }}
-            className="fixed bottom-5 right-5 z-50 w-[220px] overflow-hidden rounded-xl border border-white/20 bg-black shadow-2xl sm:w-[280px]"
+            className="fixed bottom-5 right-5 z-50 w-[220px] overflow-hidden rounded-xl border border-white/20 bg-black shadow-2xl sm:w-[280px] lg:w-[360px] xl:w-[420px]"
           >
-            <div className="flex items-center justify-between bg-white px-2 py-1.5">
-              <span className="font-display truncate text-[10px] font-bold uppercase tracking-widest text-black">
+            <div className="flex items-center justify-between bg-white px-2 py-1.5 lg:px-3 lg:py-2">
+              <span className="font-display truncate text-[10px] font-bold uppercase tracking-widest text-black lg:text-xs">
                 Braille Records
               </span>
-              <div className="flex shrink-0 items-center gap-0.5">
+              <div className="flex shrink-0 items-center gap-0.5 lg:gap-1">
                 <button
                   onClick={scrollToTop}
                   aria-label="Back to top / reattach video"
-                  className="flex h-8 w-8 items-center justify-center rounded-full text-black/60 transition-colors hover:bg-black/10 hover:text-black active:bg-black/20"
+                  className="flex h-8 w-8 items-center justify-center rounded-full text-black/60 transition-colors hover:bg-black/10 hover:text-black active:bg-black/20 lg:h-9 lg:w-9"
                 >
-                  <ArrowUp className="h-4 w-4" />
+                  <ArrowUp className="h-4 w-4 lg:h-5 lg:w-5" />
                 </button>
                 <button
                   onClick={() => setClosed(true)}
                   aria-label="Close video"
-                  className="flex h-8 w-8 items-center justify-center rounded-full text-black/60 transition-colors hover:bg-black/10 hover:text-black active:bg-black/20"
+                  className="flex h-8 w-8 items-center justify-center rounded-full text-black/60 transition-colors hover:bg-black/10 hover:text-black active:bg-black/20 lg:h-9 lg:w-9"
                 >
-                  <X className="h-4 w-4" />
+                  <X className="h-4 w-4 lg:h-5 lg:w-5" />
                 </button>
               </div>
             </div>
@@ -145,9 +145,9 @@ export function VslHero({ releaseCount }: VslHeroProps) {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 40 }}
             onClick={() => setClosed(false)}
-            className="fixed bottom-5 right-5 z-50 flex items-center gap-1.5 rounded-full border border-white/20 bg-black px-3 py-2 text-[10px] font-semibold uppercase tracking-wide text-white shadow-2xl"
+            className="fixed bottom-5 right-5 z-50 flex items-center gap-1.5 rounded-full border border-white/20 bg-black px-3 py-2 text-[10px] font-semibold uppercase tracking-wide text-white shadow-2xl lg:gap-2 lg:px-4 lg:py-2.5 lg:text-xs"
           >
-            <Zap className="h-3 w-3" />
+            <Zap className="h-3 w-3 lg:h-3.5 lg:w-3.5" />
             Watch
           </motion.button>
         )}
