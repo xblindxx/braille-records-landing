@@ -54,49 +54,49 @@ function OptionCard({
         </div>
       )}
 
-      <div className="flex flex-1 flex-col p-6">
+      <div className="flex flex-1 flex-col p-6 lg:p-7">
         <div className="mb-4 flex items-center justify-between gap-2">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 lg:gap-3">
             <span
-              className={`flex h-8 w-8 items-center justify-center rounded-full ${badgeColor}`}
+              className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full lg:h-10 lg:w-10 ${badgeColor}`}
             >
               {icon}
             </span>
-            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/50">
+            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/50 lg:text-xs lg:text-white/70">
               {badge}
             </span>
           </div>
 
           {priceNow && (
-            <div className="flex items-baseline gap-1.5">
+            <div className="flex items-baseline gap-1.5 lg:gap-2">
               {priceWas && (
-                <span className="text-xs text-white/30 line-through">
+                <span className="text-xs text-white/40 line-through lg:text-base">
                   {priceWas}
                 </span>
               )}
-              <span className="font-display text-lg font-black text-white">
+              <span className="font-display text-lg font-black text-white lg:text-3xl">
                 {priceNow}
               </span>
             </div>
           )}
         </div>
 
-        <h3 className="font-display mb-2 text-lg font-black uppercase tracking-tight text-white sm:text-xl">
+        <h3 className="font-display mb-2 text-lg font-black uppercase tracking-tight text-white sm:text-xl lg:text-2xl">
           {title}
         </h3>
-        <p className="mb-6 flex-1 text-sm leading-relaxed text-white/50">
+        <p className="mb-6 flex-1 text-sm leading-relaxed text-white/50 lg:text-base lg:text-white/65">
           {description}
         </p>
 
         <div
-          className={`inline-flex items-center gap-1.5 self-start text-xs font-semibold uppercase tracking-wide ${
+          className={`inline-flex items-center gap-1.5 self-start text-xs font-semibold uppercase tracking-wide lg:text-sm ${
             comingSoon
               ? "text-white/30"
               : "text-white transition-transform group-hover:translate-x-1"
           }`}
         >
           {comingSoon ? "Coming Soon" : cta}
-          {!comingSoon && <ArrowRight className="h-3.5 w-3.5" />}
+          {!comingSoon && <ArrowRight className="h-3.5 w-3.5 lg:h-4 lg:w-4" />}
         </div>
       </div>
     </Wrapper>
@@ -108,7 +108,7 @@ export function CtaOptions() {
     <section className="relative z-10 px-4 pb-16 pt-4 sm:px-8 sm:pb-24 lg:px-12">
       <div className="mx-auto grid max-w-6xl grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-6">
         <OptionCard
-          icon={<Gift className="h-4 w-4 text-white" />}
+          icon={<Gift className="h-4 w-4 text-white lg:h-5 lg:w-5" />}
           badgeColor="bg-[#9b5cff]"
           badge="100% Free"
           title="101%"
@@ -119,7 +119,7 @@ export function CtaOptions() {
         />
 
         <OptionCard
-          icon={<Crown className="h-4 w-4 text-black" />}
+          icon={<Crown className="h-4 w-4 text-black lg:h-5 lg:w-5" />}
           badgeColor="bg-white"
           badge="Membership"
           title="Braille Records Subscription"
@@ -130,7 +130,7 @@ export function CtaOptions() {
         />
 
         <OptionCard
-          icon={<Package className="h-4 w-4 text-black" />}
+          icon={<Package className="h-4 w-4 text-black lg:h-5 lg:w-5" />}
           badgeColor="bg-white"
           badge="Best Value"
           priceWas="$463"
