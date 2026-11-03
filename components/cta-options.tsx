@@ -116,11 +116,11 @@ export function CtaOptions() {
           icon={<Gift className="h-4 w-4 text-white lg:h-5 lg:w-5" />}
           badgeColor="bg-[#9b5cff]"
           badge="100% Free"
-          priceNow="FREE"
-          priceNote="free download"
+          priceNow="$0"
+          priceNote="enter $0 at checkout"
           title="101%"
           description="An hour-long DJ mix of electronic video game remixes — 100 game remixes from bLiNd, ranging 2002–2017."
-          cta="Listen Free on Bandcamp"
+          cta="Listen on Bandcamp"
           href="https://braillerecords.com/album/101"
           art="https://f4.bcbits.com/img/a2341209040_16.jpg"
         />
