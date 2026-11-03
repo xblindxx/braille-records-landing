@@ -13,6 +13,7 @@ interface OptionCardProps {
   comingSoon?: boolean;
   priceWas?: string;
   priceNow?: string;
+  priceNote?: string;
 }
 
 function OptionCard({
@@ -27,6 +28,7 @@ function OptionCard({
   comingSoon,
   priceWas,
   priceNow,
+  priceNote,
 }: OptionCardProps) {
   const Wrapper = comingSoon ? "div" : "a";
   const wrapperProps = comingSoon
@@ -37,7 +39,7 @@ function OptionCard({
     <Wrapper
       {...wrapperProps}
       className={`group relative flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] transition-colors ${
-        comingSoon ? "opacity-70" : "hover:border-white/25 hover:bg-white/[0.06]"
+        comingSoon ? "" : "hover:border-white/25 hover:bg-white/[0.06]"
       }`}
     >
       {art && (
@@ -55,29 +57,32 @@ function OptionCard({
       )}
 
       <div className="flex flex-1 flex-col p-6 lg:p-7 xl:p-6">
-        <div className="mb-4 flex flex-wrap items-center justify-between gap-x-2 gap-y-2">
-          <div className="flex items-center gap-2 lg:gap-3">
-            <span
-              className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full lg:h-10 lg:w-10 ${badgeColor}`}
-            >
-              {icon}
-            </span>
-            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/50 lg:text-xs lg:text-white/70">
-              {badge}
-            </span>
-          </div>
+        <div className="mb-3 flex items-center gap-2 lg:gap-3">
+          <span
+            className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full lg:h-10 lg:w-10 ${badgeColor}`}
+          >
+            {icon}
+          </span>
+          <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/50 lg:text-xs lg:text-white/70">
+            {badge}
+          </span>
+        </div>
 
-          {priceNow && (
-            <div className="flex items-baseline gap-1.5 lg:gap-2">
-              {priceWas && (
-                <span className="text-xs text-white/40 line-through lg:text-base">
-                  {priceWas}
-                </span>
-              )}
-              <span className="font-display text-lg font-black text-white lg:text-3xl xl:text-3xl">
-                {priceNow}
-              </span>
-            </div>
+        {/* Price row: same size + position on all four cards so the tiers
+            read as one consistent ladder (FREE / $25 / $50 / $97). */}
+        <div className="mb-4 flex items-baseline gap-2">
+          {priceWas && (
+            <span className="text-sm text-white/55 line-through lg:text-lg">
+              {priceWas}
+            </span>
+          )}
+          <span className="font-display text-3xl font-black leading-none text-white lg:text-4xl xl:text-3xl 2xl:text-4xl">
+            {priceNow}
+          </span>
+          {priceNote && (
+            <span className="text-[10px] font-semibold uppercase tracking-widest text-white/60 lg:text-xs">
+              {priceNote}
+            </span>
           )}
         </div>
 
@@ -111,6 +116,8 @@ export function CtaOptions() {
           icon={<Gift className="h-4 w-4 text-white lg:h-5 lg:w-5" />}
           badgeColor="bg-[#9b5cff]"
           badge="100% Free"
+          priceNow="FREE"
+          priceNote="free download"
           title="101%"
           description="An hour-long DJ mix of electronic video game remixes — 100 game remixes from bLiNd, ranging 2002–2017."
           cta="Listen Free on Bandcamp"
@@ -123,6 +130,7 @@ export function CtaOptions() {
           badgeColor="bg-white"
           badge="Game Remixes"
           priceNow="$25"
+          priceNote="one-time"
           title="bLiNd Remix Anthology"
           description="Every videogame remix bLiNd has made, 2002–2021, in one collection — 229 tracks, including all the game arrangement albums like Chozo Legacy (Super Metroid) and NESterYears, classic NES games remixed into trance and house. MP3 + FLAC, instant download."
           cta="Get the Anthology"
@@ -134,6 +142,8 @@ export function CtaOptions() {
           icon={<Crown className="h-4 w-4 text-black lg:h-5 lg:w-5" />}
           badgeColor="bg-white"
           badge="Membership"
+          priceNow="$50"
+          priceNote="per year"
           title="Braille Records Subscription"
           description="Get every new release the moment it drops, plus unlimited access to the entire back catalog. $50/year."
           cta="Subscribe on Bandcamp"
@@ -147,6 +157,7 @@ export function CtaOptions() {
           badge="Best Value"
           priceWas="$453"
           priceNow="$97"
+          priceNote="one-time"
           title="Own the Entire Discography"
           description="Every Braille Records release — all 109 and counting — sent as a Dropbox link in 320kbps MP3 and lossless FLAC. Buy anytime this year and every new release drops straight into your folder too."
           cta="Buy the Full Catalog"
