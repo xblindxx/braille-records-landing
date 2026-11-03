@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { ArrowRight, Gift, Crown, Package } from "lucide-react";
+import { ArrowRight, Gift, Crown, Package, Gamepad2 } from "lucide-react";
 
 interface OptionCardProps {
   icon: React.ReactNode;
@@ -54,8 +54,8 @@ function OptionCard({
         </div>
       )}
 
-      <div className="flex flex-1 flex-col p-6 lg:p-7">
-        <div className="mb-4 flex items-center justify-between gap-2">
+      <div className="flex flex-1 flex-col p-6 lg:p-7 xl:p-6">
+        <div className="mb-4 flex flex-wrap items-center justify-between gap-x-2 gap-y-2">
           <div className="flex items-center gap-2 lg:gap-3">
             <span
               className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full lg:h-10 lg:w-10 ${badgeColor}`}
@@ -74,14 +74,14 @@ function OptionCard({
                   {priceWas}
                 </span>
               )}
-              <span className="font-display text-lg font-black text-white lg:text-3xl">
+              <span className="font-display text-lg font-black text-white lg:text-3xl xl:text-3xl">
                 {priceNow}
               </span>
             </div>
           )}
         </div>
 
-        <h3 className="font-display mb-2 text-lg font-black uppercase tracking-tight text-white sm:text-xl lg:text-2xl">
+        <h3 className="font-display mb-2 text-lg font-black uppercase tracking-tight text-white sm:text-xl lg:text-2xl xl:text-xl 2xl:text-2xl">
           {title}
         </h3>
         <p className="mb-6 flex-1 text-sm leading-relaxed text-white/50 lg:text-base lg:text-white/65">
@@ -106,7 +106,7 @@ function OptionCard({
 export function CtaOptions() {
   return (
     <section className="relative z-10 px-4 pb-16 pt-4 sm:px-8 sm:pb-24 lg:px-12">
-      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-6">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 xl:grid-cols-4">
         <OptionCard
           icon={<Gift className="h-4 w-4 text-white lg:h-5 lg:w-5" />}
           badgeColor="bg-[#9b5cff]"
@@ -116,6 +116,18 @@ export function CtaOptions() {
           cta="Listen Free on Bandcamp"
           href="https://braillerecords.com/album/101"
           art="https://f4.bcbits.com/img/a2341209040_16.jpg"
+        />
+
+        <OptionCard
+          icon={<Gamepad2 className="h-4 w-4 text-black lg:h-5 lg:w-5" />}
+          badgeColor="bg-white"
+          badge="Game Remixes"
+          priceNow="$25"
+          title="bLiNd Remix Anthology"
+          description="Every videogame remix bLiNd has made, 2002–2021, in one collection — 229 tracks, including all the game arrangement albums like Chozo Legacy (Super Metroid) and NESterYears, classic NES games remixed into trance and house. MP3 + FLAC, instant download."
+          cta="Get the Anthology"
+          href="https://www.blindedm.com/blind-remixes"
+          art="https://g.tlcdn.com/gen/4f11ee9cd1034072929261f4487f3bc9.jpeg"
         />
 
         <OptionCard
@@ -133,7 +145,7 @@ export function CtaOptions() {
           icon={<Package className="h-4 w-4 text-black lg:h-5 lg:w-5" />}
           badgeColor="bg-white"
           badge="Best Value"
-          priceWas="$463"
+          priceWas="$453"
           priceNow="$97"
           title="Own the Entire Discography"
           description="Every Braille Records release — all 109 and counting — sent as a Dropbox link in 320kbps MP3 and lossless FLAC. Buy anytime this year and every new release drops straight into your folder too."
