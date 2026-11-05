@@ -9,13 +9,13 @@ const ogImageUrl =
   "https://galaxy-prod.tlcdn.com/view/user_30lkrHgNDuDcw8jcID4t5begfcs/d2a781b37c1f4bb3a01a06903ae6ce05.jpg";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://landing.braillerecords.com"),
+  metadataBase: new URL("https://www.remixhype.com"),
   title,
   description,
   icons: {
-    icon: "/icon.png",
-    shortcut: "/icon.png",
-    apple: "/icon.png",
+    icon: "https://g.tlcdn.com/gen/64f9c02161f648c68288d64ac66c05f2.png",
+    shortcut: "https://g.tlcdn.com/gen/64f9c02161f648c68288d64ac66c05f2.png",
+    apple: "https://g.tlcdn.com/gen/64f9c02161f648c68288d64ac66c05f2.png",
   },
   openGraph: {
     title,

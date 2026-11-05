@@ -161,7 +161,7 @@ export function CtaOptions() {
           title="Own the Entire Discography"
           description="Every Braille Records release — all 109 and counting — sent as a Dropbox link in 320kbps MP3 and lossless FLAC. Buy anytime this year and every new release drops straight into your folder too."
           cta="Buy the Full Catalog"
-          comingSoon
+          href="https://blindedm.com/braille-records-all-releases-bundle"
           art="https://galaxy-prod.tlcdn.com/view/user_30lkrHgNDuDcw8jcID4t5begfcs/7fc01051f6e748d7af988ed2ae46fbd9.jpg"
         />
       </div>
