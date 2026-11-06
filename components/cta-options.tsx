@@ -145,7 +145,7 @@ export function CtaOptions() {
           priceNow="$50"
           priceNote="per year"
           title="Braille Records Subscription"
-          description="Get every new release the moment it drops, plus unlimited access to the entire back catalog. $50/year."
+          description="Get every new release the moment it drops, unlimited access to the entire back catalog, and 15% off CDs/Vinyls. $50/year."
           cta="Subscribe on Bandcamp"
           href="https://braillerecords.com/subscribe"
           art="https://galaxy-prod.tlcdn.com/view/user_30lkrHgNDuDcw8jcID4t5begfcs/d2a781b37c1f4bb3a01a06903ae6ce05.jpg"
