@@ -1,4 +1,5 @@
 import { ExternalLink } from "lucide-react";
+import { CookieSettingsLink } from "@/components/cookie-settings-link";
 
 export function SiteFooter() {
   return (
@@ -18,6 +19,7 @@ export function SiteFooter() {
       >
         View full catalog on Bandcamp <ExternalLink className="h-3 w-3" />
       </a>
+      <CookieSettingsLink />
     </footer>
   );
 }

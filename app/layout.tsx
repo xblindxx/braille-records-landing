@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { releases } from "@/lib/releases";
+import { TrackingConsent } from "@/components/tracking-consent";
 
 const releaseCount = releases.length;
 const title = "Braille Records — You Have Just Found The Electronic Underground";
@@ -59,6 +60,7 @@ export default function RootLayout({
       </head>
       <body className="bg-[#07070a] text-[#f2f0ea] antialiased">
         {children}
+        <TrackingConsent />
       </body>
     </html>
   );

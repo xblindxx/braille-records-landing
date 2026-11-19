@@ -1,10 +1,13 @@
 import { Heart, ArrowRight } from "lucide-react";
+import { withUtm } from "@/lib/meta";
 
 export function FollowBanner() {
   return (
     <section className="relative z-10 px-4 pt-6 sm:px-8 sm:pt-10 lg:px-12">
       <a
-        href="https://braillerecords.com"
+        href={withUtm("https://braillerecords.com", "follow")}
+        data-meta-event="Lead"
+        data-meta-name="Follow on Bandcamp"
         target="_blank"
         rel="noopener noreferrer"
         className="group mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4 transition-colors hover:border-white/25 hover:bg-white/[0.06] sm:flex-row sm:gap-4 sm:px-6 lg:px-8 lg:py-6"
