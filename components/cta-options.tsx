@@ -131,7 +131,7 @@ export function CtaOptions() {
           priceNow="$0"
           priceNote="enter $0 at checkout"
           title="101%"
-          description="An hour-long DJ mix of electronic video game remixes — 100 game remixes from bLiNd, ranging 2002–2017."
+          description="An hour-long DJ mix plus 100 electronic video game remixes from bLiNd, 7.8 hours of music from 2002–2017."
           cta="Listen on Bandcamp"
           href={withUtm("https://braillerecords.com/album/101", "101")}
           metaEvent="Lead"
@@ -177,7 +177,7 @@ export function CtaOptions() {
           priceNow="$97"
           priceNote="one-time"
           title="Own the Entire Discography"
-          description="Every Braille Records release — all 109 and counting — sent as a Dropbox link in 320kbps MP3 and lossless FLAC. Buy anytime this year and every new release drops straight into your folder too."
+          description="All 109 releases plus 200 unreleased songs: 28 years of music from 1998 to 2026, 1,100+ tracks. One Dropbox link, releases in 320kbps MP3 and lossless FLAC. Buy this year and every new release drops into your folder too."
           cta="Buy the Full Catalog"
           href={withUtm("https://blindedm.com/braille-records-all-releases-bundle", "discography")}
           metaEvent="InitiateCheckout"
