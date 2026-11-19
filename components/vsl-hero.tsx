@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, Zap, X, ArrowUp } from "lucide-react";
 
-const YOUTUBE_ID = "Ey7ypu7qUPA";
+const YOUTUBE_ID = "7aE3rXt4NcM";
 // No autoplay/mute: the video waits for a tap to play. Since playback is
 // then a genuine user gesture, mobile browsers allow it to start WITH sound
 // by default — which sidesteps a real bug where YouTube's embed chrome

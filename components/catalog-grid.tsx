@@ -139,6 +139,8 @@ function ReleaseCard({ release }: { release: Release }) {
     <motion.a
       layout
       href={release.url}
+      data-meta-event="ReleaseClick"
+      data-meta-name={release.title}
       target="_blank"
       rel="noopener noreferrer"
       initial={{ opacity: 0, y: 16 }}

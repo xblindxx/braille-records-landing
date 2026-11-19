@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { ArrowRight, Gift, Crown, Package, Gamepad2 } from "lucide-react";
+import { withUtm } from "@/lib/meta";
 
 interface OptionCardProps {
   icon: React.ReactNode;
@@ -14,6 +15,8 @@ interface OptionCardProps {
   priceWas?: string;
   priceNow?: string;
   priceNote?: string;
+  metaEvent?: string;
+  metaValue?: number;
 }
 
 function OptionCard({
@@ -29,11 +32,20 @@ function OptionCard({
   priceWas,
   priceNow,
   priceNote,
+  metaEvent,
+  metaValue,
 }: OptionCardProps) {
   const Wrapper = comingSoon ? "div" : "a";
   const wrapperProps = comingSoon
     ? {}
-    : { href, target: "_blank", rel: "noopener noreferrer" };
+    : {
+        href,
+        target: "_blank",
+        rel: "noopener noreferrer",
+        "data-meta-event": metaEvent,
+        "data-meta-name": title,
+        "data-meta-value": metaValue,
+      };
 
   return (
     <Wrapper
@@ -121,7 +133,9 @@ export function CtaOptions() {
           title="101%"
           description="An hour-long DJ mix of electronic video game remixes — 100 game remixes from bLiNd, ranging 2002–2017."
           cta="Listen on Bandcamp"
-          href="https://braillerecords.com/album/101"
+          href={withUtm("https://braillerecords.com/album/101", "101")}
+          metaEvent="Lead"
+          metaValue={0}
           art="https://f4.bcbits.com/img/a2341209040_16.jpg"
         />
 
@@ -134,7 +148,9 @@ export function CtaOptions() {
           title="bLiNd Remix Anthology"
           description="Every videogame remix bLiNd has made, 2002–2021, in one collection — 229 tracks, including all the game arrangement albums like Chozo Legacy (Super Metroid) and NESterYears, classic NES games remixed into trance and house. MP3 + FLAC, instant download."
           cta="Get the Anthology"
-          href="https://www.blindedm.com/blind-remixes"
+          href={withUtm("https://www.blindedm.com/blind-remixes", "anthology")}
+          metaEvent="InitiateCheckout"
+          metaValue={25}
           art="https://g.tlcdn.com/gen/4f11ee9cd1034072929261f4487f3bc9.jpeg"
         />
 
@@ -147,7 +163,9 @@ export function CtaOptions() {
           title="Braille Records Subscription"
           description="Get every new release the moment it drops, unlimited access to the entire back catalog, and 15% off CDs/Vinyls/Cassettes."
           cta="Subscribe on Bandcamp"
-          href="https://braillerecords.com/subscribe"
+          href={withUtm("https://braillerecords.com/subscribe", "subscription")}
+          metaEvent="InitiateCheckout"
+          metaValue={50}
           art="https://galaxy-prod.tlcdn.com/view/user_30lkrHgNDuDcw8jcID4t5begfcs/d2a781b37c1f4bb3a01a06903ae6ce05.jpg"
         />
 
@@ -161,7 +179,9 @@ export function CtaOptions() {
           title="Own the Entire Discography"
           description="Every Braille Records release — all 109 and counting — sent as a Dropbox link in 320kbps MP3 and lossless FLAC. Buy anytime this year and every new release drops straight into your folder too."
           cta="Buy the Full Catalog"
-          href="https://blindedm.com/braille-records-all-releases-bundle"
+          href={withUtm("https://blindedm.com/braille-records-all-releases-bundle", "discography")}
+          metaEvent="InitiateCheckout"
+          metaValue={97}
           art="https://galaxy-prod.tlcdn.com/view/user_30lkrHgNDuDcw8jcID4t5begfcs/7fc01051f6e748d7af988ed2ae46fbd9.jpg"
         />
       </div>
