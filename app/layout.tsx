@@ -13,6 +13,10 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://www.remixhype.com"),
   title,
   description,
+  // Meta domain verification (Business Settings > Brand Safety > Domains).
+  other: {
+    "facebook-domain-verification": "3edrnz0d4o0ie9o350l0e4km5nj3yu",
+  },
   icons: {
     icon: "https://g.tlcdn.com/gen/64f9c02161f648c68288d64ac66c05f2.png",
     shortcut: "https://g.tlcdn.com/gen/64f9c02161f648c68288d64ac66c05f2.png",
