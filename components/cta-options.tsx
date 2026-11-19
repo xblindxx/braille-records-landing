@@ -148,7 +148,7 @@ export function CtaOptions() {
           title="bLiNd Remix Anthology"
           description="Every videogame remix bLiNd has made, 2002–2021, in one collection — 229 tracks, including all the game arrangement albums like Chozo Legacy (Super Metroid) and NESterYears, classic NES games remixed into trance and house. MP3 + FLAC, instant download."
           cta="Get the Anthology"
-          href={withUtm("https://www.blindedm.com/blind-remixes", "anthology")}
+          href={withUtm("https://blindedm.com/blind-remix-anthology", "anthology")}
           metaEvent="InitiateCheckout"
           metaValue={25}
           art="https://g.tlcdn.com/gen/4f11ee9cd1034072929261f4487f3bc9.jpeg"
