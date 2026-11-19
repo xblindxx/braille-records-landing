@@ -2,7 +2,13 @@
 
 import Script from "next/script";
 import { useEffect } from "react";
-import { META_PIXEL_ID } from "@/lib/meta";
+import {
+  META_PIXEL_ID,
+  FBCLID_KEY,
+  FBCLID_MAX_AGE_MS,
+  extractFbclid,
+  addFbclid,
+} from "@/lib/meta";
 
 declare global {
   interface Window {
@@ -31,8 +37,37 @@ function sendToServer(body: Record<string, unknown>) {
 
 export function MetaPixel() {
   useEffect(() => {
+    // Remember the ad click ID (from the landing URL, or from an earlier visit
+    // inside Meta's 90-day window) and attach it to links going to blindedm.com.
+    let fbclid = extractFbclid(window.location.search);
+    try {
+      if (fbclid) {
+        localStorage.setItem(FBCLID_KEY, JSON.stringify({ v: fbclid, t: Date.now() }));
+      } else {
+        const raw = localStorage.getItem(FBCLID_KEY);
+        const saved = raw ? JSON.parse(raw) : null;
+        if (saved && typeof saved.v === "string" && Date.now() - saved.t < FBCLID_MAX_AGE_MS) {
+          fbclid = saved.v;
+        }
+      }
+    } catch {
+      /* storage unavailable: skip pass-through */
+    }
+    const decorate = (a: HTMLAnchorElement) => {
+      if (!fbclid) return;
+      const next = addFbclid(a.href, fbclid);
+      if (next !== a.href) a.href = next;
+    };
+    if (fbclid) {
+      document.querySelectorAll<HTMLAnchorElement>("a[href]").forEach(decorate);
+    }
+
     const handle = (e: MouseEvent) => {
       if (e.type === "auxclick" && e.button !== 1) return; // middle-click only
+      const link = (e.target as Element | null)?.closest?.(
+        "a[href]",
+      ) as HTMLAnchorElement | null;
+      if (link) decorate(link);
       const el = (e.target as Element | null)?.closest?.(
         "a[data-meta-event]",
       ) as HTMLAnchorElement | null;
