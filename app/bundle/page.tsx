@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Check } from "lucide-react";
 import { TopBanners } from "@/components/top-banners";
@@ -7,6 +6,10 @@ import { SiteFooter } from "@/components/site-footer";
 import { withUtm } from "@/lib/meta";
 
 const BUNDLE_URL = "https://blindedm.com/braille-records-all-releases-bundle";
+// Vertical (9:16) YouTube Short with the bundle story. Tap-to-play with sound,
+// no autoplay, so mobile browsers allow audio.
+const BUNDLE_VIDEO_ID = "2i2NzRzFodg";
+const BUNDLE_VIDEO_SRC = `https://www.youtube-nocookie.com/embed/${BUNDLE_VIDEO_ID}?rel=0&modestbranding=1&playsinline=1`;
 const COLLAGE =
   "https://galaxy-prod.tlcdn.com/view/user_30lkrHgNDuDcw8jcID4t5begfcs/7fc01051f6e748d7af988ed2ae46fbd9.jpg";
 
@@ -81,15 +84,26 @@ export default function BundlePage() {
         </div>
 
         <div className="relative mx-auto mt-10 grid max-w-5xl items-center gap-10 lg:grid-cols-2 lg:gap-14">
-          <Image
-            src={COLLAGE}
-            alt="Braille Records catalog bundle artwork"
-            width={1014}
-            height={1012}
-            unoptimized
-            priority
-            className="mx-auto w-full max-w-md rounded-2xl border border-white/10 shadow-[0_30px_90px_rgba(0,0,0,0.6)] lg:max-w-none"
-          />
+          {/* Vertical player: width is capped by viewport height too, so it never
+              pushes the price and buy button far down the page. */}
+          <div
+            className="mx-auto text-center"
+            style={{ width: "min(340px, calc(58svh * 9 / 16))" }}
+          >
+            <div className="aspect-[9/16] w-full overflow-hidden rounded-2xl border border-white/15 bg-black shadow-[0_30px_90px_rgba(0,0,0,0.6)]">
+              <iframe
+                className="h-full w-full"
+                src={BUNDLE_VIDEO_SRC}
+                title="Braille Records: the whole catalog"
+                loading="lazy"
+                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+            <p className="mt-3 text-[11px] uppercase tracking-[0.25em] text-white/45">
+              Tap play, sound on
+            </p>
+          </div>
 
           <div className="text-center lg:text-left">
             <div className="flex flex-wrap items-baseline justify-center gap-3 lg:justify-start">
