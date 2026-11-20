@@ -5,6 +5,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { ExternalLink, Disc3, Gift } from "lucide-react";
 import { releases, Release } from "@/lib/releases";
+import { BandcampNote } from "@/components/bandcamp-note";
 
 const BUCKET_ORDER = [
   "House",
@@ -111,6 +112,8 @@ export function CatalogGrid() {
             </button>
           ))}
       </div>
+
+      <BandcampNote className="mb-5" />
 
       <p className="mb-3 text-center text-[10px] uppercase tracking-widest text-white/30 sm:mb-4 sm:text-xs">
         Showing {filtered.length} release{filtered.length === 1 ? "" : "s"}

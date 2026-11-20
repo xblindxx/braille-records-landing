@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { ArrowRight, Gift, Crown, Package, Gamepad2 } from "lucide-react";
 import { withUtm } from "@/lib/meta";
+import { BandcampNote } from "@/components/bandcamp-note";
 
 interface OptionCardProps {
   icon: React.ReactNode;
@@ -185,6 +186,7 @@ export function CtaOptions() {
           art="https://galaxy-prod.tlcdn.com/view/user_30lkrHgNDuDcw8jcID4t5begfcs/7fc01051f6e748d7af988ed2ae46fbd9.jpg"
         />
       </div>
+      <BandcampNote className="mt-8" />
     </section>
   );
 }

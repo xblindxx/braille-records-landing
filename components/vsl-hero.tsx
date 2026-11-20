@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, Zap, X, ArrowUp } from "lucide-react";
+import { CATALOG_COUNTS } from "@/lib/catalog-stats";
 
 const YOUTUBE_ID = "7aE3rXt4NcM";
 // No autoplay/mute: the video waits for a tap to play. Since playback is
@@ -61,10 +62,10 @@ export function VslHero({ releaseCount }: VslHeroProps) {
 
   return (
     <>
-      <section className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-6 py-20">
+      <section className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-6 py-20 lg:py-10">
         <HeroBackdrop />
 
-        <div className="relative z-10 mb-8 flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-[11px] uppercase tracking-[0.25em] text-white/80">
+        <div className="relative z-10 mb-8 flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-[11px] uppercase tracking-[0.25em] text-white/80 lg:mb-5">
           <Zap className="h-3 w-3" />
           Braille Records — {releaseCount} releases and counting
         </div>
@@ -73,7 +74,15 @@ export function VslHero({ releaseCount }: VslHeroProps) {
           You have just found the electronic underground
         </h1>
 
-        <p className="relative z-10 mt-6 max-w-xl text-center text-sm text-white/50 sm:text-base">
+        <p className="relative z-10 mt-4 text-center text-xs font-semibold uppercase tracking-[0.18em] text-white/70 sm:text-sm">
+          {CATALOG_COUNTS.albums} albums
+          <span className="mx-2 text-[#9b5cff]">&middot;</span>
+          {CATALOG_COUNTS.eps} EPs
+          <span className="mx-2 text-[#9b5cff]">&middot;</span>
+          {CATALOG_COUNTS.singles} singles
+        </p>
+
+        <p className="relative z-10 mt-4 max-w-xl text-center text-sm text-white/50 sm:text-base">
           Tap play, then scroll down — the full Braille Records catalog
           is waiting below, sorted by genre and linked straight to Bandcamp.
         </p>
@@ -85,7 +94,7 @@ export function VslHero({ releaseCount }: VslHeroProps) {
             collapses to zero height since the player is no longer in flow. */}
         <div
           ref={sentinelRef}
-          className="relative z-10 mt-10 w-full max-w-4xl"
+          className="relative z-10 mt-10 w-full max-w-4xl lg:mt-7"
         >
           {/* Single persistent player. Only its position/size classes change
               between the hero slot and the docked corner — the iframe itself
