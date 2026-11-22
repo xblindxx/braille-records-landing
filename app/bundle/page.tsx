@@ -8,7 +8,7 @@ import { withUtm } from "@/lib/meta";
 const BUNDLE_URL = "https://blindedm.com/braille-records-all-releases-bundle";
 // Vertical (9:16) YouTube Short with the bundle story. Tap-to-play with sound,
 // no autoplay, so mobile browsers allow audio.
-const BUNDLE_VIDEO_ID = "2i2NzRzFodg";
+const BUNDLE_VIDEO_ID = "7JahbpV2RbY";
 const BUNDLE_VIDEO_SRC = `https://www.youtube-nocookie.com/embed/${BUNDLE_VIDEO_ID}?rel=0&modestbranding=1&playsinline=1`;
 const COLLAGE =
   "https://galaxy-prod.tlcdn.com/view/user_30lkrHgNDuDcw8jcID4t5begfcs/7fc01051f6e748d7af988ed2ae46fbd9.jpg";
