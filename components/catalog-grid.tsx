@@ -150,15 +150,20 @@ function ReleaseCard({ release }: { release: Release }) {
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
-      className="group relative flex flex-col"
+      /* Desktop hover: the hovered card is lifted above its neighbours (z-10,
+         still below the sticky filter bar at z-20) and the whole tile grows
+         from its centre, so it overlaps the albums around it. The z-index drop
+         is delayed by the shrink animation's length (300ms) so the tile
+         doesn't slip underneath its neighbours while still shrinking back. */
+      className="group relative z-0 flex flex-col sm:[transition:z-index_0s_linear_300ms] sm:hover:z-10 sm:hover:[transition:z-index_0s_linear_0s]"
     >
-      <div className="relative aspect-square w-full overflow-hidden rounded-lg bg-white/5">
+      <div className="relative aspect-square w-full overflow-hidden rounded-lg bg-white/5 sm:transition-[transform,box-shadow] sm:duration-300 sm:ease-out sm:group-hover:scale-[1.35] sm:group-hover:shadow-[0_18px_45px_-8px_rgba(0,0,0,0.95)] sm:group-hover:ring-1 sm:group-hover:ring-white/25">
         <Image
           src={release.art}
           alt={`${release.title} by ${release.artist}`}
           fill
           sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 16vw"
-          className="object-cover transition-transform duration-500 group-hover:scale-110"
+          className="object-cover"
           unoptimized
         />
 
