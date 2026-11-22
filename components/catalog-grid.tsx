@@ -5,6 +5,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { ExternalLink, Disc3, Gift } from "lucide-react";
 import { releases, Release } from "@/lib/releases";
+import { RELEASE_YEARS } from "@/lib/release-years";
 import { BandcampNote } from "@/components/bandcamp-note";
 
 const BUCKET_ORDER = [
@@ -174,7 +175,11 @@ function ReleaseCard({ release }: { release: Release }) {
           <p className="line-clamp-2 text-xs font-semibold leading-tight text-white">
             {release.title}
           </p>
-          <p className="mt-0.5 text-[11px] text-white/60">{release.artist}</p>
+          <p className="mt-0.5 text-[11px] text-white/60">
+            {release.artist}
+            <span className="mx-1 text-[#9b5cff]">&middot;</span>
+            {RELEASE_YEARS[release.id]}
+          </p>
           <span className="mt-2 inline-flex items-center gap-1 text-[10px] font-medium text-white">
             Listen on Bandcamp <ExternalLink className="h-2.5 w-2.5" />
           </span>
