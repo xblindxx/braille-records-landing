@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { ExternalLink, Disc3, Gift } from "lucide-react";
@@ -138,10 +138,37 @@ export function CatalogGrid() {
   );
 }
 
+// How much a hovered tile grows, and how close to the browser edge it may get.
+const HOVER_SCALE = 1.35;
+const EDGE_MARGIN = 12;
+
 function ReleaseCard({ release }: { release: Release }) {
+  const tileRef = useRef<HTMLDivElement>(null);
+
+  // The tile grows by a share of its own width, so on wide screens a card in
+  // the first or last column can grow past the edge of the window and get
+  // cut off. Work out how far (if at all) it would stick out and nudge the
+  // growing tile back inside the window by that much.
+  const keepOnScreen = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const tile = tileRef.current;
+    if (!tile) return;
+    // Measure the grid cell itself (the link), not the tile, so the numbers
+    // stay right even if the cursor re-enters while the tile is mid-shrink.
+    const rect = e.currentTarget.getBoundingClientRect();
+    const grow = (rect.width * (HOVER_SCALE - 1)) / 2;
+    const viewport = document.documentElement.clientWidth;
+    let dx = 0;
+    const leftOver = EDGE_MARGIN - (rect.left - grow);
+    const rightOver = rect.right + grow - (viewport - EDGE_MARGIN);
+    if (leftOver > 0) dx = leftOver;
+    else if (rightOver > 0) dx = -rightOver;
+    tile.style.setProperty("--dx", `${dx}px`);
+  };
+
   return (
     <motion.a
       layout
+      onMouseEnter={keepOnScreen}
       href={release.url}
       data-meta-event="ReleaseClick"
       data-meta-name={release.title}
@@ -157,7 +184,10 @@ function ReleaseCard({ release }: { release: Release }) {
          doesn't slip underneath its neighbours while still shrinking back. */
       className="group relative z-0 flex flex-col sm:[transition:z-index_0s_linear_300ms] sm:hover:z-10 sm:hover:[transition:z-index_0s_linear_0s]"
     >
-      <div className="relative aspect-square w-full overflow-hidden rounded-lg bg-white/5 sm:transition-[transform,box-shadow] sm:duration-300 sm:ease-out sm:group-hover:scale-[1.35] sm:group-hover:shadow-[0_18px_45px_-8px_rgba(0,0,0,0.95)] sm:group-hover:ring-1 sm:group-hover:ring-white/25">
+      <div
+        ref={tileRef}
+        className="relative aspect-square w-full overflow-hidden rounded-lg bg-white/5 sm:transition-[transform,box-shadow] sm:duration-300 sm:ease-out sm:group-hover:[transform:translateX(var(--dx,0px))_scale(1.35)] sm:group-hover:shadow-[0_18px_45px_-8px_rgba(0,0,0,0.95)] sm:group-hover:ring-1 sm:group-hover:ring-white/25"
+      >
         <Image
           src={release.art}
           alt={`${release.title} by ${release.artist}`}
