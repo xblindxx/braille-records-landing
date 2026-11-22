@@ -94,7 +94,9 @@ export function VslHero({ releaseCount }: VslHeroProps) {
             collapses to zero height since the player is no longer in flow. */}
         <div
           ref={sentinelRef}
-          className="relative z-10 mt-10 w-full max-w-4xl lg:mt-7"
+          className={`relative mt-10 w-full max-w-4xl lg:mt-7 ${
+            docked ? "" : "z-10"
+          }`}
         >
           {/* Single persistent player. Only its position/size classes change
               between the hero slot and the docked corner — the iframe itself
