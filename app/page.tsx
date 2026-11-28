@@ -1,6 +1,7 @@
 import { TopBanners } from "@/components/top-banners";
 import { VslHero } from "@/components/vsl-hero";
 import { CtaOptions } from "@/components/cta-options";
+import { EmailSignup } from "@/components/email-signup";
 import { FollowBanner } from "@/components/follow-banner";
 import { CatalogGrid } from "@/components/catalog-grid";
 import { SiteFooter } from "@/components/site-footer";
@@ -12,6 +13,7 @@ export default function Home() {
       <TopBanners />
       <VslHero releaseCount={releases.length} />
       <CtaOptions />
+      <EmailSignup />
       <FollowBanner />
       <CatalogGrid />
       <SiteFooter />

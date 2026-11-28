@@ -72,7 +72,12 @@ export function MetaPixel() {
         "a[data-meta-event]",
       ) as HTMLAnchorElement | null;
       if (!el) return;
+      track(el);
+    };
 
+    // Sends one event (browser Pixel + server) for an element that carries
+    // data-meta-* attributes: a tracked link, or the email signup form.
+    const track = (el: HTMLElement) => {
       const event = el.dataset.metaEvent as string;
       const name = el.dataset.metaName;
       const raw = el.dataset.metaValue;
@@ -101,9 +106,20 @@ export function MetaPixel() {
     };
     document.addEventListener("click", handle);
     document.addEventListener("auxclick", handle);
+
+    // Email signup: count a submitted form as a Lead (no email address is sent).
+    const handleSubmit = (e: Event) => {
+      const form = (e.target as Element | null)?.closest?.(
+        "form[data-meta-event]",
+      ) as HTMLFormElement | null;
+      if (form) track(form);
+    };
+    // Capture phase: Kit's own script stops the submit event from bubbling.
+    document.addEventListener("submit", handleSubmit, true);
     return () => {
       document.removeEventListener("click", handle);
       document.removeEventListener("auxclick", handle);
+      document.removeEventListener("submit", handleSubmit, true);
     };
   }, []);
 

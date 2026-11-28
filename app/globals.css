@@ -81,3 +81,93 @@ body {
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+/* Kit email signup: restyle Kit's embed to match the site. !important is
+   needed because Kit writes colours and sizes as inline styles. */
+.kit-signup form.formkit-form[data-uid][data-format] {
+  border-radius: 16px !important;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.04) !important;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+}
+.kit-signup form.formkit-form[data-uid][data-format] [data-style="full"] {
+  min-height: 0 !important;
+  border-radius: 0 !important;
+}
+.kit-signup form.formkit-form[data-uid][data-format] .formkit-background {
+  display: none !important;
+}
+.kit-signup form.formkit-form[data-uid][data-format] .formkit-container {
+  background: transparent !important;
+  padding: 28px 20px !important;
+  text-align: center;
+}
+.kit-signup form.formkit-form[data-uid][data-format] .formkit-header h2 {
+  font-family: "Unbounded", sans-serif;
+  font-size: 1.4rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  margin: 0 0 8px;
+}
+.kit-signup form.formkit-form[data-uid][data-format] .formkit-content {
+  margin: 0 auto 18px;
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+.kit-signup form.formkit-form[data-uid][data-format] .formkit-fields {
+  margin: 0 auto;
+  max-width: 440px !important;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.kit-signup form.formkit-form[data-uid][data-format] .formkit-input {
+  background: rgba(0, 0, 0, 0.45) !important;
+  color: #fff !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 10px !important;
+}
+.kit-signup form.formkit-form[data-uid][data-format] .formkit-input:focus {
+  border-color: #9b5cff !important;
+}
+.kit-signup form.formkit-form[data-uid][data-format] .formkit-submit {
+  background: #9b5cff !important;
+  border-radius: 10px !important;
+  width: 100%;
+  margin-bottom: 0 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.kit-signup form.formkit-form[data-uid][data-format] .formkit-disclaimer {
+  margin-top: 12px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+.kit-signup form.formkit-form[data-uid][data-format] .formkit-powered-by-convertkit-container {
+  margin: 10px 0 0 !important;
+  opacity: 0.6;
+}
+.kit-signup form.formkit-form[data-uid][data-format] .formkit-alert-success {
+  background: rgba(155, 92, 255, 0.15) !important;
+  border-color: rgba(155, 92, 255, 0.5) !important;
+  color: #fff !important;
+}
+.kit-signup form.formkit-form[data-uid][data-format] .formkit-container {
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 0 !important;
+}
+.kit-signup form.formkit-form[data-uid][data-format] .formkit-header,
+.kit-signup form.formkit-form[data-uid][data-format] .formkit-disclaimer {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 440px;
+  text-align: center;
+}
+.kit-signup form.formkit-form[data-uid][data-format] .formkit-powered-by-convertkit-container {
+  justify-content: center;
+}
+.kit-signup form.formkit-form[data-uid][data-format] .formkit-fields {
+  width: 100%;
+}
